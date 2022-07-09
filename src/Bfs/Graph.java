@@ -7,55 +7,48 @@ import java.util.*;
 // representation
 class Graph
 {
-    private int V; // No. of vertices
-    private LinkedList<Integer> adj[]; //Adjacency Lists
+    private int V;                              //number of nodes in the graph
+    private LinkedList<Integer> adj[];              //adjacency list
+    private Queue<Integer> queue;                   //maintaining a queue
 
-    // Constructor
     Graph(int v)
     {
         V = v;
         adj = new LinkedList[v];
-        for (int i=0; i<v; ++i)
-            adj[i] = new LinkedList();
+        for (int i=0; i<v; i++)
+        {
+            adj[i] = new LinkedList<>();
+        }
+        queue = new LinkedList<Integer>();
     }
 
-    // Function to add an edge into the graph
+
     void addEdge(int v,int w)
     {
-        adj[v].add(w);
+        adj[v].add(w);                          //adding an edge to the adjacency list (edges are bidirectional in this example)
     }
 
-    // prints BFS traversal from a given source s
-    void BFS(int s)
+    void BFS(int n)
     {
-        // Mark all the vertices as not visited(By default
-        // set as false)
-        boolean visited[] = new boolean[V];
 
-        // Create a queue for BFS
-        LinkedList<Integer> queue = new LinkedList<Integer>();
+        boolean nodes[] = new boolean[V];       //initialize boolean array for holding the data
+        int a = 0;
 
-        // Mark the current node as visited and enqueue it
-        visited[s]=true;
-        queue.add(s);
+        nodes[n]=true;
+        queue.add(n);                   //root node is added to the top of the queue
 
         while (queue.size() != 0)
         {
-            // Dequeue a vertex from queue and print it
-            s = queue.poll();
-            System.out.print(s+" ");
+            n = queue.poll();             //remove the top element of the queue
+            System.out.print(n+" ");           //print the top element of the queue
 
-            // Get all adjacent vertices of the dequeued vertex s
-            // If a adjacent has not been visited, then mark it
-            // visited and enqueue it
-            Iterator<Integer> i = adj[s].listIterator();
-            while (i.hasNext())
+            for (int i = 0; i < adj[n].size(); i++)  //iterate through the linked list and push all neighbors into queue
             {
-                int n = i.next();
-                if (!visited[n])
+                a = adj[n].get(i);
+                if (!nodes[a])                    //only insert nodes into queue if they have not been explored already
                 {
-                    visited[n] = true;
-                    queue.add(n);
+                    nodes[a] = true;
+                    queue.add(a);
                 }
             }
         }
