@@ -19,6 +19,7 @@ class Graph
         {
             adj[i] = new LinkedList<>();
         }
+        //create a queue to keep track of the nodes to explore
         queue = new LinkedList<Integer>();
     }
 
